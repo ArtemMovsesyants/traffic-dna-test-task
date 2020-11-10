@@ -40,7 +40,7 @@ class ResultControllerTest {
     void setPerson_200_ok() throws Exception {
         UserResult userResult = new UserResult("5", 5, 5);
 
-        Mockito.when(resultManager.setPerson(userResult)).thenReturn(true);
+        Mockito.when(resultManager.setResult(userResult)).thenReturn(true);
         MockHttpServletResponse response = mockMvc.perform(post("/setInfo")
                 .contentType("application/json")
                 .content(mapper.writeValueAsBytes(userResult)))
@@ -48,7 +48,7 @@ class ResultControllerTest {
                 .andReturn().getResponse();
         boolean actualResult = mapper.readValue(response.getContentAsByteArray(), Boolean.class);
 
-        Mockito.verify(resultManager, times(1)).setPerson(userResult);
+        Mockito.verify(resultManager, times(1)).setResult(userResult);
         assertThat(actualResult).isTrue();
     }
 
@@ -56,7 +56,7 @@ class ResultControllerTest {
     void setPerson_400_ok() throws Exception {
         UserResult userResult = new UserResult("5", 5, -5);
 
-        Mockito.when(resultManager.setPerson(userResult)).thenReturn(false);
+        Mockito.when(resultManager.setResult(userResult)).thenReturn(false);
         MockHttpServletResponse response = mockMvc.perform(post("/setInfo")
                 .contentType("application/json")
                 .content(mapper.writeValueAsBytes(userResult)))
@@ -64,7 +64,7 @@ class ResultControllerTest {
                 .andReturn().getResponse();
         boolean actualResult = mapper.readValue(response.getContentAsByteArray(), Boolean.class);
 
-        Mockito.verify(resultManager, times(0)).setPerson(userResult);
+        Mockito.verify(resultManager, times(0)).setResult(userResult);
         assertThat(actualResult).isFalse();
     }
 

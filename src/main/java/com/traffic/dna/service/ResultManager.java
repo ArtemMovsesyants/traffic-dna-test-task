@@ -9,5 +9,5 @@ public interface ResultManager {
 
     Set<UserResult> getLevelInfo(int levelId);
 
-    boolean setPerson(UserResult newUserResult);
+    boolean setResult(UserResult newUserResult);
 }

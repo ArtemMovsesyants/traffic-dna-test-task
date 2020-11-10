@@ -36,9 +36,9 @@ class SimpleResultManagerTest {
         expectedResult.add(userResult1);
         expectedResult.add(userResult2);
 
-        resultManager.setPerson(userResult1);
-        resultManager.setPerson(userResult2);
-        resultManager.setPerson(userResult3);
+        resultManager.setResult(userResult1);
+        resultManager.setResult(userResult2);
+        resultManager.setResult(userResult3);
         Set<UserResult> actualResult = resultManager.getUserInfo("1");
 
         assertThat(actualResult).isEqualTo(expectedResult);
@@ -59,9 +59,9 @@ class SimpleResultManagerTest {
         expectedResult.add(userResult1);
         expectedResult.add(userResult3);
 
-        resultManager.setPerson(userResult1);
-        resultManager.setPerson(userResult2);
-        resultManager.setPerson(userResult3);
+        resultManager.setResult(userResult1);
+        resultManager.setResult(userResult2);
+        resultManager.setResult(userResult3);
         Set<UserResult> actualResult = resultManager.getLevelInfo(2);
 
         assertThat(actualResult).isEqualTo(expectedResult);
@@ -71,14 +71,15 @@ class SimpleResultManagerTest {
     void setPerson() {
         UserResult userResult1 = new UserResult("1", 1, 1);
         UserResult userResult2 = new UserResult("1", 2, 2);
-        boolean actualResult1 = resultManager.setPerson(userResult1);
-        boolean actualResult2 = resultManager.setPerson(userResult2);
+        boolean actualResult1 = resultManager.setResult(userResult1);
+        boolean actualResult2 = resultManager.setResult(userResult2);
         assertThat(actualResult1 && actualResult2).isTrue();
     }
 
     @Test
     void setPerson2() {
         ReflectionTestUtils.setField(resultManager, "USER_RESULTS_LIMIT", 3);
+        ReflectionTestUtils.setField(resultManager, "LEVEL_RESULTS_LIMIT", 3);
         UserResult userResult1 = new UserResult("1", 1, 1);
         UserResult userResult3 = new UserResult("1", 2, 4);
         UserResult userResult5 = new UserResult("1", 2, 6);
@@ -91,11 +92,11 @@ class SimpleResultManagerTest {
         expectedResult.add(userResult5);
         expectedResult.add(userResult4);
 
-        resultManager.setPerson(userResult1);
-        resultManager.setPerson(userResult2);
-        resultManager.setPerson(userResult3);
-        resultManager.setPerson(userResult4);
-        resultManager.setPerson(userResult5);
+        resultManager.setResult(userResult1);
+        resultManager.setResult(userResult2);
+        resultManager.setResult(userResult3);
+        resultManager.setResult(userResult4);
+        resultManager.setResult(userResult5);
         Set<UserResult> actualResult = resultManager.getUserInfo("1");
 
         assertThat(actualResult).isEqualTo(expectedResult);
@@ -104,15 +105,18 @@ class SimpleResultManagerTest {
     @Test
     void setPerson3() {
         ReflectionTestUtils.setField(resultManager, "USER_RESULTS_LIMIT", 3);
+        ReflectionTestUtils.setField(resultManager, "LEVEL_RESULTS_LIMIT", 3);
         UserResult userResult1 = new UserResult("1", 1, 10);
         UserResult userResult2 = new UserResult("1", 1, 15);
         UserResult userResult3 = new UserResult("1", 2, 20);
+        UserResult userResult4 = new UserResult("1", 2, 25);
         UserResult userResult = new UserResult("1", 2, 5);
 
-        resultManager.setPerson(userResult1);
-        resultManager.setPerson(userResult2);
-        resultManager.setPerson(userResult3);
-        boolean actualResult = resultManager.setPerson(userResult);
+        resultManager.setResult(userResult1);
+        resultManager.setResult(userResult2);
+        resultManager.setResult(userResult3);
+        resultManager.setResult(userResult4);
+        boolean actualResult = resultManager.setResult(userResult);
 
         assertThat(actualResult).isFalse();
     }
