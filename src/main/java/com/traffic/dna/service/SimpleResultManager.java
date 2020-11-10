@@ -52,9 +52,9 @@ public class SimpleResultManager implements ResultManager {
         TreeSet<UserResult> topUserResults = topResultsByUserId.get(newUserResult.getUserId());
         if (topUserResults == null) {
             topUserResults = new TreeSet<>(USER_INFO_COMPARATOR);
-            return andNewResultForUser(newUserResult, topUserResults);
+            return addNewResultForUser(newUserResult, topUserResults);
         } else if (topUserResults.size() < USER_RESULTS_LIMIT) {
-            return andNewResultForUser(newUserResult, topUserResults);
+            return addNewResultForUser(newUserResult, topUserResults);
         } else if (topUserResults.size() == USER_RESULTS_LIMIT && doesNewResultHitTheTop(newUserResult, topUserResults)) {
             return updateTopResults(newUserResult, topUserResults);
         }
@@ -68,10 +68,10 @@ public class SimpleResultManager implements ResultManager {
 
     private boolean updateTopResults(UserResult newUserResult, TreeSet<UserResult> userResults) {
         userResults.pollLast();
-        return andNewResultForUser(newUserResult, userResults);
+        return addNewResultForUser(newUserResult, userResults);
     }
 
-    private boolean andNewResultForUser(UserResult newUserResult, TreeSet<UserResult> userResults) {
+    private boolean addNewResultForUser(UserResult newUserResult, TreeSet<UserResult> userResults) {
         userResults.add(newUserResult);
         topResultsByUserId.put(newUserResult.getUserId(), userResults);
         log.info("New result was added");
@@ -81,7 +81,7 @@ public class SimpleResultManager implements ResultManager {
 
     private boolean doesNewResultHitTheTop(UserResult newUserResult, TreeSet<UserResult> topResults) {
         int worstResult = topResults.last().getResult();
-        return worstResult > newUserResult.getResult();
+        return worstResult < newUserResult.getResult();
     }
 
 }

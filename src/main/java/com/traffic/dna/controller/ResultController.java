@@ -15,7 +15,7 @@ import java.util.Set;
 public class ResultController {
     private final ResultManager resultManager;
 
-    public ResultController(@Qualifier("simpleResultManager")ResultManager resultManager) {
+    public ResultController(@Qualifier("simpleResultManager") ResultManager resultManager) {
         this.resultManager = resultManager;
     }
 
@@ -32,15 +32,9 @@ public class ResultController {
     @GetMapping("/userInfo/{userId}")
     public ResponseEntity<Object> getUserInfo(@PathVariable String userId) {
         log.info("'Get user info' request was received");
-
-        if (userId == null || userId.isEmpty()) {
-            log.error("User Id '{}' is incorrect. User Id can't be null or empty", userId);
-            return new ResponseEntity<>("User Id is incorrect", HttpStatus.BAD_REQUEST);
-        }
-
         Set<UserResult> userInfo = resultManager.getUserInfo(userId);
-        return new ResponseEntity<>(userInfo, HttpStatus.OK);
 
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
     @GetMapping("/levelInfo/{levelId}")

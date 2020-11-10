@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j2;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResult{
+public class UserResult {
     @JsonProperty("user_id")
     String userId;
 
@@ -27,13 +27,13 @@ public class UserResult{
         boolean isLevelIdValid = levelId > 0;
         boolean isResultValid = result >= 0;
 
-        if (!isUserIdValid){
+        if (!isUserIdValid) {
             log.error("User Id '{}' is incorrect. User Id can't be null or empty", userId);
         }
-        if (!isLevelIdValid){
+        if (!isLevelIdValid) {
             log.error("Level Id '{}' is incorrect. Level Id should be bigger than 0", levelId);
         }
-        if (!isResultValid){
+        if (!isResultValid) {
             log.error("Result '{}' is incorrect. Result Id can't be negative", result);
         }
 
